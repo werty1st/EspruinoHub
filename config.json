@@ -21,9 +21,19 @@
   "http_whitelist" : [
     "e7:e0:57:ad:36:a2"    
   ],
-  "//mqtt_host": "mqtts://example.duckdns.org",
+  "//mqtt_host": "mqtt://mqtt",
   "//mqtt_options": {
-    "username": "user",
-    "password": "pass"
+    "//username": "user",
+    "//password": "pass",
+    "will": {
+      "topic": "pinode/status",
+      "payload": "offline"
+    },
+    "birth": {
+      "topic": "pinode/status",
+      "payload": "online"
+    },
+    "protocolVersion": 4,
+    "port": 1883
   }
 }
