@@ -1,9 +1,14 @@
 {
   "// If a device's address is here, it'll be given a human-readable name":0,
   "known_devices" : {
-    "c0:52:3f:50:42:c9" : "office",
-    "fc:a6:c6:04:db:79" : "hall_down",
-    "cf:71:de:4d:f8:48" : "hall_up"
+    "a4:77:33:8e:fd:ec" : "googlA",
+    "54:60:09:e7:63:a1" : "googlB",
+    "48:d6:d5:c8:a1:6c" : "googlC",
+    "88:c6:26:03:f9:e0" : "logi",
+    "6d:e8:39:e8:80:f2" : "S8",
+    "ec:29:63:8c:80:07" : "Puck1",
+    "e9:05:8c:a7:64:ab" : "Puck2",
+    "f3:31:a5:db:f1:ab" : "Puck3"
   },
   "// We can add our own custom advertising UUIDs here with names to help decode them":0, 
   "advertised_services" : {
@@ -21,8 +26,8 @@
   "http_whitelist" : [
     "e7:e0:57:ad:36:a2"    
   ],
-  "//mqtt_host": "mqtt://mqtt",
-  "//mqtt_options": {
+  "mqtt_host": "mqtt://mqtt",
+  "mqtt_options": {
     "//username": "user",
     "//password": "pass",
     "will": {
@@ -33,7 +38,6 @@
       "topic": "pinode/status",
       "payload": "online"
     },
-    "protocolVersion": 4,
     "port": 1883
   }
 }
