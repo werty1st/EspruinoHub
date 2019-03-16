@@ -8,7 +8,8 @@
     "6d:e8:39:e8:80:f2" : "S8",
     "ec:29:63:8c:80:07" : "Puck1",
     "e9:05:8c:a7:64:ab" : "Puck2",
-    "f3:31:a5:db:f1:ab" : "Puck3"
+    "f3:31:a5:db:f1:ab" : "Puck3",
+    "30:ae:a4:22:69:ce" : "esp32wroom"
   },
   "// We can add our own custom advertising UUIDs here with names to help decode them":0, 
   "advertised_services" : {
@@ -30,7 +31,7 @@
   "http_whitelist" : [
     "e7:e0:57:ad:36:a2"    
   ],
-  "mqtt_host": "mqtt://mqtt",
+  "mqtt_host": "mqtt://192.168.81.100",
   "mqtt_options": {
     "//username": "user",
     "//password": "pass",
