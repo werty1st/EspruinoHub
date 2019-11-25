@@ -40,7 +40,7 @@
   "http_whitelist" : [
     "e7:e0:57:ad:36:a2"    
   ],
-  "mqtt_host": "mqtt://192.168.81.100",
+  "mqtt_host": "mqtt://localhost",
   "mqtt_options": {
     "//username": "user",
     "//password": "pass",

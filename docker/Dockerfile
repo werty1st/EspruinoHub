@@ -1,5 +1,18 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04 as builder
 
+
+# install dependencies
+RUN apt update
+RUN apt install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt install -y nodejs build-essential git wget make gcc g++ libbluetooth-dev libudev-dev
+
+WORKDIR /home/pi/EspruinoHub
+ADD . .
+RUN npm install
+
+
+FROM ubuntu:18.04
 # Add non root user
 ARG USER=pi
 ARG UID=1000
@@ -9,26 +22,20 @@ RUN useradd -m ${USER} --uid=${UID}
 
 # install dependencies
 RUN apt update
-RUN apt install -y build-essential curl git wget
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-
-RUN apt install -y nodejs
-RUN apt install -y mosquitto-clients \
-                    bluetooth bluez libbluetooth-dev \
-                    libudev-dev
-RUN apt install -y libcap2-bin
+RUN apt install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt install -y nodejs mosquitto-clients \
+                    bluetooth bluez libcap2-bin
 
 RUN setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
 # install Hub
+COPY --from=builder /home/pi/EspruinoHub /home/pi/EspruinoHub
 WORKDIR /home/pi/EspruinoHub
-ADD . .
 RUN chown -R ${UID}:${GID} .
-USER ${UID}:${GID}
-RUN npm install
 
-ENTRYPOINT [ "/home/pi/EspruinoHub/start.sh" ]
+USER ${UID}:${GID}
+CMD [ "node", "index.js" ]
 
 
 
