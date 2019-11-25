@@ -23,9 +23,10 @@ Ideally use a Raspberry Pi 3 or Zero W, as these have Bluetooth LE on them alrea
 These instructions install up to date Node.js and Node-RED - however it can take a while! If you just want EspruinoHub and the IDE, see the next item.
 
 ```
-sudo apt-get install build-essential python-rpi.gpio
+sudo apt-get update
+sudo apt-get install build-essential python-rpi.gpio nodejs nodered
 # OPTIONAL: Install a modern version of nodejs and nodered
-# Not recommended - This installs Node 10 which currently has issues with Bluetooth LE support
+# Not recommended - The Pi's supplied Node.js version is more than good enough
 # bash <(curl -sL https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/update-nodejs-and-nodered)
 # Get dependencies
 sudo apt-get install mosquitto mosquitto-clients bluetooth bluez libbluetooth-dev libudev-dev
@@ -119,6 +120,17 @@ fi
 * The HTTP Proxy service is disabled by default and needs some configuration - see **HTTP Proxy** below
 * You used to need a local copy of the Espruino Web IDE, however now EspruinoHub just serves up an IFRAME which points to the online IDE, ensuring it is always up to date.
 
+### Uninstalling
+
+Assuming you followed the steps above (including for 'Headless Startup') you can
+uninstall EspruinoHub using the following commands: 
+
+```
+sudo systemctl stop EspruinoHub.service
+sudo systemctl disable EspruinoHub.service
+sudo rm /etc/systemd/system/EspruinoHub.service
+sudo rm -rf ~/EspruinoHub
+```
 
 Usage
 -----
@@ -228,7 +240,7 @@ be very long when converted to a String.
 You can also connect to a device using MQTT packets:
 
 * `/ble/write/DEVICE/SERVICE/CHARACTERISTIC` connects and writes to the charactertistic
-* `/ble/read/DEVICE/SERVICE/CHARACTERISTIC` connects and reads from the charactertistic
+* `/ble/read/DEVICE/SERVICE/CHARACTERISTIC` connects and reads from the charactertistic, sending the result back as a topic `/ble/data/DEVICE/SERVICE/CHARACTERISTIC`
 * `/ble/read/DEVICE` connects and reads an array of services and charactertistics
 * `/ble/notify/DEVICE/SERVICE/CHARACTERISTIC` connects and starts notifications on the characteristic, which
 send data back on `/ble/data/DEVICE/SERVICE/CHARACTERISTIC`
