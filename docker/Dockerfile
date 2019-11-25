@@ -9,11 +9,6 @@ RUN useradd -m ${USER} --uid=${UID}
 
 # install dependencies
 RUN apt update
-#RUN apt install -y python-rpi.gpio
-
-#RUNs as docker service
-#RUN apt install -y mosquitto
-
 RUN apt install -y build-essential curl git wget
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -22,19 +17,18 @@ RUN apt install -y nodejs
 RUN apt install -y mosquitto-clients \
                     bluetooth bluez libbluetooth-dev \
                     libudev-dev
-                    
-#RUNs as docker service
-#RUN npm install -g --unsafe-perm node-red
+RUN apt install -y libcap2-bin
 
-WORKDIR /home/pi/EspruinoHub
+RUN setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
 # install Hub
+WORKDIR /home/pi/EspruinoHub
 ADD . .
 RUN chown -R ${UID}:${GID} .
-
 USER ${UID}:${GID}
 RUN npm install
 
+ENTRYPOINT [ "/home/pi/EspruinoHub/start.sh" ]
 
 
 
