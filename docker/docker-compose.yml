@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  hub:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      #args:
+      #  buildno: 1
+ 
+  # OPTIONAL
+  # docker-compose exec rabbitmq sh -c "mosquitto_passwd -b /mosquitto/config/passwd USER PASS"
+  # mqtt:
+  #   restart: always
+  #   image: eclipse-mosquitto
+  #   ports:
+  #     - 1883:1883
+  #   #volumes:
+  #   #  - ./mqtt/config/passwd:/mosquitto/config/passwd
+  #   #  - ./mqtt/data/:/mosquitto/data
+  #   #  - ./mqtt/log/:/mosquitto/log
+
+  # OPTIONAL
+  # nodered:
+  #   restart: always
+  #   image: nodered/node-red
+  #   ports:
+  #     - 1880:1880
+  #   volumes:
+  #     - ./data/:/data
+
