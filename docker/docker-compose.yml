@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   hub:
+    image: werty1st/espruinohub
     build:
       context: .
       dockerfile: docker/Dockerfile
