@@ -33,13 +33,14 @@ services:
     #   hub_net:  
 
   # OPTIONAL
-  # nodered:
-  #   restart: always
-  #   image: nodered/node-red
-  #   ports:
-  #     - 1880:1880
-  #   volumes:
-  #     - ./data/:/data
+  nodered:
+    restart: always
+    image: nodered/node-red
+    network_mode: host
+    # ports:
+    #   - 1880:1880
+    volumes:
+      - ./red/:/data
 
 networks:
     hub_net:

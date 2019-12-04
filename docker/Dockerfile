@@ -1,5 +1,5 @@
+### START BUILD ###
 FROM ubuntu:18.04 as builder
-
 
 # install dependencies
 RUN apt update
@@ -10,8 +10,10 @@ RUN apt install -y nodejs build-essential git wget make gcc g++ libbluetooth-dev
 WORKDIR /home/pi/EspruinoHub
 ADD . .
 RUN npm install
+### ENDE BUILD ###
 
 
+### START RUNTIME ###
 FROM ubuntu:18.04
 # Add non root user
 ARG USER=pi
