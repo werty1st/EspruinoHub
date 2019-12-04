@@ -10,5 +10,5 @@ up:
 	docker-compose up
 
 
-push:
-	docker build -t werty1st/espruinohub -f docker/Dockerfile . && docker push werty1st/espruinohub
+push: build
+	docker-compose build push
