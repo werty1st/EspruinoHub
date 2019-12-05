@@ -13,7 +13,7 @@
   },
 
   "// Set this to true to only publish MQTT messages for known devices":0,
-  "only_known_devices": false,
+  "only_known_devices": true,
 
   "// How many seconds to wait for a packet before considering BLE connection":0,
   "// broken and exiting. Higher values are useful with slowly advertising sensors.":0,

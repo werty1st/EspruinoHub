@@ -37,6 +37,8 @@ WORKDIR /home/pi/EspruinoHub
 RUN chown -R ${UID}:${GID} .
 
 USER ${UID}:${GID}
+ENV BLENO_ADVERTISING_INTERVAL=300
+ENV NOBLE_MULTI_ROLE=1
 CMD [ "node", "index.js" ]
 
 
