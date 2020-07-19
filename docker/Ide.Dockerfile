@@ -7,8 +7,8 @@ RUN apt install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt install -y nodejs build-essential git wget make gcc g++ libbluetooth-dev libudev-dev
 
-WORKDIR /home/pi/EspruinoHub
-ADD . .
+WORKDIR /home/pi/EspruinoWebIDE
+RUN git clone --recursive https://github.com/espruino/EspruinoWebIDE.git .
 RUN npm install
 ### ENDE BUILD ###
 
@@ -23,23 +23,23 @@ ARG GID=1000
 RUN useradd -m ${USER} --uid=${UID}
 
 # install dependencies
-RUN apt update
-RUN apt install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install -y nodejs mosquitto-clients \
-                    bluetooth bluez libcap2-bin
+RUN apt update && \
+    apt install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
+    apt install -y nodejs \
+        bluetooth bluez libcap2-bin && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
 # install Hub
-COPY --from=builder /home/pi/EspruinoHub /home/pi/EspruinoHub
-WORKDIR /home/pi/EspruinoHub
+COPY --from=builder /home/pi/EspruinoWebIDE /home/pi/EspruinoWebIDE
+WORKDIR /home/pi/EspruinoWebIDE
 RUN chown -R ${UID}:${GID} .
 
 USER ${UID}:${GID}
-ENV BLENO_ADVERTISING_INTERVAL=300
-ENV NOBLE_MULTI_ROLE=1
-CMD [ "node", "index.js" ]
+
+CMD [ "node", "server.js" ]
 
 
 

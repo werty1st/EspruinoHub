@@ -5,48 +5,54 @@ services:
     image: werty1st/espruinohub
     build:
       context: .
-      dockerfile: docker/Dockerfile
-      #args:
-      #  buildno: 1
+      dockerfile: docker/Hub.Dockerfile
     restart: always
     privileged: true
-    #command: BLENO_ADVERTISING_INTERVAL=300 NOBLE_MULTI_ROLE=1 node index.js
+    environment: 
+      - BLENO_ADVERTISING_INTERVAL=300
+      - NOBLE_MULTI_ROLE=1
+      - BLENO_HCI_DEVICE_ID=0
     volumes: #for development
+      - /dev:/dev
       - ./lib:/home/pi/EspruinoHub/lib
       - ./index.js:/home/pi/EspruinoHub/index.js
       - ./config.json:/home/pi/EspruinoHub/config.json
     network_mode: host
-    # networks:
-    #   hub_net:
+
+
+  ide:
+    image: werty1st/espruinoide
+    build:
+      context: .
+      dockerfile: docker/Ide.Dockerfile
+    restart: always
+    privileged: true
+    environment: 
+      - NOBLE_HCI_DEVICE_ID=1
+    volumes: #for development
+      - /dev:/dev
+    network_mode: host    
+
 
   # OPTIONAL
   # docker-compose exec rabbitmq sh -c "mosquitto_passwd -b /mosquitto/config/passwd USER PASS"
   mqtt:
     restart: always
     image: eclipse-mosquitto
-  #   ports:
-  #     - 1883:1883
-  #   #volumes:
-  #   #  - ./mqtt/config/passwd:/mosquitto/config/passwd
-  #   #  - ./mqtt/data/:/mosquitto/data
-  #   #  - ./mqtt/log/:/mosquitto/log
-    network_mode: host
-    # networks:
-    #   hub_net:  
+    ports:
+      - 1883:1883
+    #volumes:
+    #  - ./mqtt/config/passwd:/mosquitto/config/passwd
+    #  - ./mqtt/data/:/mosquitto/data
+    #  - ./mqtt/log/:/mosquitto/log
+    #network_mode: host
 
   # OPTIONAL
   nodered:
     restart: always
     image: nodered/node-red
-    network_mode: host
-    # ports:
-    #   - 1880:1880
+    #network_mode: host
+    ports:
+      - 1880:1880
     volumes:
       - ./red/:/data
-
-networks:
-    hub_net:
-        ipam:
-            driver: default
-            config:
-                - subnet: 192.168.28.0/24
