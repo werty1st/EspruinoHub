@@ -6,6 +6,15 @@ setterm --blank 0
 
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
-
+if node needs-bleno.js > /dev/null; then
+  echo "Starting with Bleno (GATT Server)"
+  export BLENO_ADVERTISING_INTERVAL=300
+  export NOBLE_MULTI_ROLE=1
+else
+  echo "Starting without Bleno (GATT Server)"
+  # Don't force multi-role if there's no HTTP proxy needed
+fi
 #BLENO_HCI_DEVICE_ID=1
-BLENO_ADVERTISING_INTERVAL=300 NOBLE_MULTI_ROLE=1 node index.js
+
+# start properly
+node index.js

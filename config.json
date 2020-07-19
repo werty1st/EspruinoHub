@@ -20,7 +20,10 @@
   "// Setting a value of 0 disables the exit/restart.":0,
   "ble_timeout": 20,
 
-  "// We can add our own custom advertising UUIDs here with names to help decode them":0, 
+  "// MQTT path for history requests and output. Default is /hist/":0,
+  "history_path": "/hist/",
+
+  "// We can add our own custom advertising UUIDs here with names to help decode them":0,
   "advertised_services" : {
     "ffff" : {
       "name" : "level"
@@ -34,11 +37,13 @@
   "// Set this to enable the HTTP proxy - it's off by default for safety":0,
   "// since it would be possible to spoof MAC addresses and use your":0,
   "// connection":0,
+  "// NOTE: Some Bluetooth adaptors will cause the error: Command Disallowed (0xc)":0,
+  "// when trying to connect if http_proxyis enabled.":0,
   "http_proxy" : false,
 
   "// If there are any addresses here, they are given access to the HTTP proxy":0,
   "http_whitelist" : [
-    "e7:e0:57:ad:36:a2"    
+    "e7:e0:57:ad:36:a2"
   ],
   "mqtt_host": "mqtt://localhost",
   "mqtt_options": {
@@ -54,4 +59,6 @@
     },
     "port": 1883
   }
+  "// Define the topic prefix under which the MQTT data will be posted. Defaults to /ble which is not adviced. For new installation, please activate the option below.":0,
+  "//mqtt_prefix": "ble"
 }
